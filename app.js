@@ -17,6 +17,16 @@ app.get("/", (req, res) => {
     }*/)
 })
 
+app.get("/messageBoard", (req, res) => {
+    res.render("messageBoard.ejs", { user: req.user })
+})
+
+app.get("/joinClub", (req, res) => {
+    res.render("joinClub.ejs")
+})
+
+
+
 
 
 

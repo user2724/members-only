@@ -1,4 +1,5 @@
 const db = require("../db/queries")
+const bcrypt = require("bcryptjs")
 
 const { body, validationResult, matchedData } = require("express-validator")
 
@@ -14,11 +15,20 @@ exports.selectAllUsers = async (req, res) => {
     }
 }
 
+/*exports.renderSignUp = async (req, res) => {
+    res.render("signUp")
+}*/
+
+/*exports.renderMessageBoard = async (req, res) => {
+    res.render("/messageBoard")
+}*/
+
 exports.addNewUser = async (req, res) => {
     const { firstName, lastName, email, password } = req.body
     await db.addNewUser( firstName, lastName, email, password)
-    res.redirect("/")
+    res.redirect("/messageBoard")
 }
+
 
 const nameErr = "must be between 1 and 25 characters"
 const alphaErr = "must contain only letters"
@@ -61,12 +71,20 @@ exports.addNewUser = [
         } 
 
          try {
-    const users = await db.selectAllUsers()
-    console.log("Users: ", users)
-    res.render("index", { users })
+     const { firstName, lastName, email, password } = req.body
+    await db.addNewUser( firstName, lastName, email, password)
+    res.redirect("/messageBoard")
+    
     } catch (error) {
         console.log("ERROR FETCHING DATA: ", error)
         res.status(500).send('Internal Server Error')
     }
     }
 ]
+
+exports.updateMembership = async (req, res) => {
+
+await db.updateMembership(req.params.email)
+res.redirect("/messageBoard")
+}
+

@@ -1,0 +1,14 @@
+<html>
+
+<title>Message Board</title>
+
+<body>
+<% if (locals.user) { %>
+    <h1>Welcome, <%= user.firstName %> <%= user.lastName %></h1>
+<% } %>
+
+    <a href="/joinClub">Join the Club</a>
+
+</body>
+
+</html>
