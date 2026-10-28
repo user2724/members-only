@@ -1,5 +1,4 @@
 const db = require("../db/queries")
-const bcrypt = require("bcryptjs")
 
 const { body, validationResult, matchedData } = require("express-validator")
 
@@ -26,7 +25,9 @@ exports.selectAllUsers = async (req, res) => {
 exports.addNewUser = async (req, res) => {
     const { firstName, lastName, email, password } = req.body
     await db.addNewUser( firstName, lastName, email, password)
-    res.redirect("/messageBoard")
+    req.session.userId = user.id
+    //res.redirect("/messageBoard")
+    res.redirect("/")
 }
 
 
@@ -73,7 +74,10 @@ exports.addNewUser = [
          try {
      const { firstName, lastName, email, password } = req.body
     await db.addNewUser( firstName, lastName, email, password)
-    res.redirect("/messageBoard")
+   // req.session.userId = user.id
+    res.redirect("/")
+    const users = await db.selectAllUsers()
+    console.log("Users: ", users.at(-1))
     
     } catch (error) {
         console.log("ERROR FETCHING DATA: ", error)
@@ -83,8 +87,14 @@ exports.addNewUser = [
 ]
 
 exports.updateMembership = async (req, res) => {
+    if (!req.user) {
+        return res.redirect("/")
+    }
 
-await db.updateMembership(req.params.email)
-res.redirect("/messageBoard")
+    if (req.body.secretPasscode !== process.env.SECRET_PASSCODE) {
+        return res.status(400).send("Incorrect Passcode")
+    }
+
+    await db.updateMembership(req.user.id)
+    res.redirect("/")
 }
-

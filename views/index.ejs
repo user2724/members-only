@@ -4,29 +4,40 @@
 
 <body>
 
-<h1>Welcome to the Message Board app!</h1>
+<% if (locals.user) { %>
+    <h1>Welcome Back, <%= user.first_name %> <%= user.last_name %></h1>
+    <a href="/joinClub">Join the Club</a>
+    <a href="/log-out">Log Out</a>
 
-<form id="signUpForm" action="/" method="POST">
-<h2>Sign Up</h2>
+    <p>Membership Status: <%= user.has_membership %>
+<% } else { %>
+    <h1>Welcome to the Message Board app!</h1>
+    <h1>Please Log In</h1>
 
-<label for="firstName">First Name</label>
-<input type="text" name="firstName" id="firstName" value="<%= locals.oldData ? oldData.firstName : '' %>">
+ <% if (errorMessage & errorMessage.length > 0) { %>
+    <div style="color: red;">
+        <p><%= errorMessage %></p>
+    </div>
+<%  }   %>
 
-<label for="lastName">Last Name</label>
-<input type="text" name="lastName" id="lastName">
+    <form action="/" method="POST">
 
+        
 <label for="email">Email</label>
 <input type="email" name="email" id="email">
 
 <label for="password">Password</label>
 <input type="password" name="password" id="password">
 
-<label for="confirmPassword">Confirm Password</label>
-<input type="password" name="confirmPassword" id="confirmPassword">
-
 <button type="submit">Submit</button>
-</form>
-<%- include("../partials/errors.ejs") %>
+
+
+
+    </form>
+<% } %>
+
+<h3>Don't have an account?</h3>
+<a href="/signUp">Sign Up</a>
 
 </body>
 
