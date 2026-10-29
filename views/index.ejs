@@ -6,11 +6,20 @@
 
 <% if (locals.user) { %>
     <h1>Welcome Back, <%= user.first_name %> <%= user.last_name %></h1>
-    <a href="/joinClub">Join the Club</a>
-    <a href="/log-out">Log Out</a>
+    
 
-    <p>Membership Status: <%= user.has_membership %>
+<% if (user.has_membership) { %>
+        <p>You are a member.</p>
+    <% } else { %>
+        <p>You are not a member. <a href="/joinClub">Join the Club</a></p>
+    <% } %>
+<p><a href="/messageForm">Create a new message</a> OR <a href="/messageBoard">View the message Board</a> </p>
+
+
+<a href="/log-out">Log Out</a>
+
 <% } else { %>
+
     <h1>Welcome to the Message Board app!</h1>
     <h1>Please Log In</h1>
 
@@ -34,10 +43,12 @@
 
 
     </form>
+
+    <h3>Don't have an account?</h3>
+<a href="/signUp">Sign Up</a>
 <% } %>
 
-<h3>Don't have an account?</h3>
-<a href="/signUp">Sign Up</a>
+
 
 </body>
 

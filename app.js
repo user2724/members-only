@@ -47,17 +47,21 @@ app.get("/", (req, res) => {
    
 })
 
-app.get("/messageBoard", (req, res) => {
-    res.render("messageBoard.ejs", { user: req.user })
-})
+
 
 app.get("/joinClub", (req, res) => {
-    res.render("joinClub.ejs")
+    res.render("joinClub.ejs", { user: req.user })
 })
 
 app.get("/signUp", (req, res) => {
     res.render("signUp")
 })
+
+app.get("/messageForm", (req, res) => {
+    res.render("messageForm")
+})
+
+
 
 app.get("/log-out", (req, res, next) => {
 req.logout((err) => {

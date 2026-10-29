@@ -4,15 +4,28 @@
 
 <body>
 
-<h1>Join The Club</h1>
 
-<form action="/joinClub" method="POST">
+<% if (locals.user ) { %>
+   <% if (!user.has_membership) { %>
+
+        <h1>Join The Club</h1>
+
+        <form action="/joinClub" method="POST">
 
 <label for="secretPasscode">Enter Secret Passcode:</label>
 <input type="password" name="secretPasscode" id="secretPasscode">
 
 <button type="submit">Submit</button>
 </form>
+
+  <%  } else { %>
+
+        <h1>You are already a member.</h1>
+
+   <% } %>
+<% } %>
+
+<a href="/">Back</a>
 
 </body>
 

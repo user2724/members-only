@@ -3,11 +3,29 @@
 <title>Message Board</title>
 
 <body>
-<% if (locals.user) { %>
-    <h1>Welcome, <%= user.first_name %> <%= user.last_name %></h1>
+<h1>Welcome to the Message Board!</h1>
+
+<% if (locals.messages) { %>
+    <% messages.forEach(message => { %>
+        <div class="message-container">
+            <ul>
+
+                <li><%= message.message_text %></li>
+ <% if (locals.user) { %>
+    <% if (user.has_membership) { %>
+<li><%= message.date %></li> 
+   <% } %>
 <% } %>
 
-    <a href="/joinClub">Join the Club</a>
+
+
+
+</ul>
+</div>
+  <%  }) %>
+    
+<% } %>
+    
 
 </body>
 

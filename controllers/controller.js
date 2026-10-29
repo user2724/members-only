@@ -98,3 +98,18 @@ exports.updateMembership = async (req, res) => {
     await db.updateMembership(req.user.id)
     res.redirect("/")
 }
+
+exports.getAllMessages = async (req, res) => {
+    const messages = await db.getAllMessages();
+    res.render("messageBoard", { messages, user: req.user })
+    console.log("messages: ", messages)
+}
+
+exports.addMessage = async (req, res) => {
+    const { messageText } = req.body
+    await db.addMessage(messageText)
+    //req.session.messageId = message.id
+    
+
+    res.redirect("/messageBoard")
+}

@@ -24,10 +24,22 @@ async function updateMembership(/*passcode,*/ id) {
     //const hashedPasscode = await bcrypt.hash(passcode, 10)
     await pool.query("UPDATE users SET has_membership = TRUE WHERE id = $1", [id/*, hashedPasscode*/])
 }
+
+async function getAllMessages() {
+    const { rows } = await pool.query("SELECT * FROM messages")
+    return rows
+}
+
+async function addMessage(messageText) {
+    const { rows } = await pool.query("INSERT INTO messages (message_text) VALUES ($1)", [messageText])
+    return rows[0]                                                                                      
+}
  
 module.exports = {
     selectAllUsers,
     addNewUser,
     updateMembership,
-    selectUserById
+    selectUserById,
+    getAllMessages,
+    addMessage
 }
