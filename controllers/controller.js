@@ -81,7 +81,14 @@ exports.addNewUser = [
     
     } catch (error) {
         console.log("ERROR FETCHING DATA: ", error)
-        res.status(500).send('Internal Server Error')
+        
+
+        if (error.code === "23505") {
+            
+            res.status(500).send("An account with this email already exists.")
+        } else {
+            res.status(500).send('Internal Server Error')
+        }
     }
     }
 ]
