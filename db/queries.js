@@ -14,7 +14,7 @@ async function selectUserById(id) {
 
 async function addNewUser(firstName, lastName, email, password) {
     const hashedPassword = await bcrypt.hash(password, 10)
-    const { rows } = await pool.query("INSERT INTO users (first_name, last_name, email, password, has_membership) VALUES ($1, $2, $3, $4, FALSE) RETURNING *",
+    const { rows } = await pool.query("INSERT INTO users (first_name, last_name, email, password, has_membership, is_admin) VALUES ($1, $2, $3, $4, FALSE, FALSE) RETURNING *",
      [firstName, lastName, email, hashedPassword])
      console.log("Hashed: ", hashedPassword)
      return rows[0]
@@ -30,16 +30,28 @@ async function getAllMessages() {
     return rows
 }
 
-async function addMessage(messageText) {
-    const { rows } = await pool.query("INSERT INTO messages (message_text) VALUES ($1)", [messageText])
+async function addMessage(messageText, author) {
+    const { rows } = await pool.query("INSERT INTO messages (message_text, author) VALUES ($1, $2)", [messageText, author])
     return rows[0]                                                                                      
 }
+
+async function updateAdmin(id) {
+    await pool.query("UPDATE users SET is_admin = true WHERE id = $1", [id])
+
+}
  
+async function deleteMessage(id) {
+const { rows } = await pool.query("DELETE FROM messages WHERE id = $1", [id])
+return rows[0]
+}
+
 module.exports = {
     selectAllUsers,
     addNewUser,
     updateMembership,
     selectUserById,
     getAllMessages,
-    addMessage
+    addMessage,
+    updateAdmin,
+    deleteMessage
 }

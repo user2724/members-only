@@ -58,10 +58,12 @@ app.get("/signUp", (req, res) => {
 })
 
 app.get("/messageForm", (req, res) => {
-    res.render("messageForm")
+    res.render("messageForm", { user: req.user })
 })
 
-
+app.get("/admin", (req, res) => {
+    res.render("admin", { user: req.user })
+})
 
 app.get("/log-out", (req, res, next) => {
 req.logout((err) => {

@@ -74,7 +74,7 @@ exports.addNewUser = [
          try {
      const { firstName, lastName, email, password } = req.body
     await db.addNewUser( firstName, lastName, email, password)
-   // req.session.userId = user.id
+    //req.session.userId = user.id
     res.redirect("/")
     const users = await db.selectAllUsers()
     console.log("Users: ", users.at(-1))
@@ -106,10 +106,26 @@ exports.getAllMessages = async (req, res) => {
 }
 
 exports.addMessage = async (req, res) => {
-    const { messageText } = req.body
-    await db.addMessage(messageText)
+    const { messageText, author } = req.body
+
+    await db.addMessage(messageText, author)
     //req.session.messageId = message.id
     
 
     res.redirect("/messageBoard")
+}
+
+exports.updateAdmin = async (req, res) => {
+    if (req.body.adminPasscode !== process.env.ADMIN_PASSCODE) {
+        return res.status(400).send("Incorrect Passcode")
+    }
+
+    await db.updateAdmin(req.user.id)
+    res.redirect("/")
+}
+
+exports.deleteMessage = async (req, res) => {
+    await db.deleteMessage(req.params.id)
+    res.redirect("/messageBoard")
+
 }

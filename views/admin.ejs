@@ -1,0 +1,37 @@
+<html>
+
+<title>Join The Club</title>
+
+<body>
+
+
+<% if (locals.user) { %>
+  <% if (!user.is_admin) {  %>   
+
+        <form action="/admin" method="POST">
+
+
+     
+<label for="adminPasscode">Enter passcode to become an admin:</label>
+<input type="password" name="adminPasscode" id="adminPasscode">
+
+
+
+
+ 
+<button type="submit">Submit</button>
+</form>
+ <% } else { %>
+
+
+ <h1>You are already an admin.</h1>
+
+<% } %>
+
+<% } %>
+
+<a href="/">Back</a>
+
+</body>
+
+</html>

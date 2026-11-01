@@ -10,11 +10,19 @@
         <div class="message-container">
             <ul>
 
-                <li><%= message.message_text %></li>
+                <h4><%= message.message_text %></h4>
  <% if (locals.user) { %>
-    <% if (user.has_membership) { %>
-<li><%= message.date %></li> 
+    <% if (user.has_membership || user.is_admin) { %>
+<p> By <%= message.author %> </p>
+<p><%= message.date %></p> 
    <% } %>
+
+   <% if (user.is_admin) { %>
+    <form action="/delete-message/<%= message.id %>" method="POST">
+        <button type="submit">Delete Message</button>
+    </form>
+   <% } %>
+
 <% } %>
 
 
@@ -26,6 +34,7 @@
     
 <% } %>
     
+<a href="/">Home</a>
 
 </body>
 

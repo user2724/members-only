@@ -5,7 +5,7 @@ const SQL = `
 CREATE TABLE IF NOT EXISTS users (
 
 id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-first_name VARCHAR( 100 ), last_name VARCHAR( 100 ), email VARCHAR( 100 ) CONSTRAINT unique_email UNIQUE, password VARCHAR( 100 ), has_membership BOOLEAN DEFAULT FALSE
+first_name VARCHAR( 100 ), last_name VARCHAR( 100 ), email VARCHAR( 100 ) CONSTRAINT unique_email UNIQUE, password VARCHAR( 100 ), has_membership BOOLEAN DEFAULT FALSE, is_admin BOOLEAN DEFAULT FALSE
 
 );
 

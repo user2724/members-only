@@ -14,15 +14,16 @@
 
 <label for="secretPasscode">Enter Secret Passcode:</label>
 <input type="password" name="secretPasscode" id="secretPasscode">
+      
+  
 
+ 
 <button type="submit">Submit</button>
 </form>
+  <% }  else { %>
+  <h1>You are already a member.</h1>
 
-  <%  } else { %>
-
-        <h1>You are already a member.</h1>
-
-   <% } %>
+<% } %>
 <% } %>
 
 <a href="/">Back</a>

@@ -9,11 +9,20 @@
     
 
 <% if (user.has_membership) { %>
+    
         <p>You are a member.</p>
     <% } else { %>
         <p>You are not a member. <a href="/joinClub">Join the Club</a></p>
     <% } %>
-<p><a href="/messageForm">Create a new message</a> OR <a href="/messageBoard">View the message Board</a> </p>
+
+<% if (user.is_admin) { %>
+    <p>You are an admin.</p>
+
+<% } else { %>
+<p>You are not an admin. <a href="/admin">Become an admin</a></p>
+
+<% } %>
+<p><a href="/messageForm">Create a new message</a> OR <a href="/messageBoard">View the Message Board</a> </p>
 
 
 <a href="/log-out">Log Out</a>
